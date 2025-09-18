@@ -61,5 +61,33 @@ def get_lucky_number() -> dict:
     }
 
 
+@mcp.tool
+def generate_superball_numbers(count: int = 1) -> dict:
+    """슈퍼볼 번호를 생성합니다. 1-69에서 5개 + 1-26에서 1개(파워볼)를 선택합니다.
+    
+    Args:
+        count: 생성할 슈퍼볼 번호 조합의 개수 (기본값: 1)
+    
+    Returns:
+        dict: {"superball_numbers": [{"white_balls": [...], "powerball": 숫자}, ...]} 형태의 JSON 객체
+    """
+    superball_combinations = []
+    
+    for _ in range(count):
+        # 1-69에서 5개 선택 (흰색 공)
+        white_balls = random.sample(range(1, 70), 5)
+        white_balls.sort()
+        
+        # 1-26에서 1개 선택 (파워볼)
+        powerball = random.randint(1, 26)
+        
+        superball_combinations.append({
+            "white_balls": white_balls,
+            "powerball": powerball
+        })
+    
+    return {"superball_numbers": superball_combinations}
+
+
 if __name__ == "__main__":
     mcp.run()
